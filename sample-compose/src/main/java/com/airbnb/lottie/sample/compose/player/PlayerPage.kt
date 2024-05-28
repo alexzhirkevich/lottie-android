@@ -125,7 +125,7 @@ fun PlayerPage(
     val dummyBitmapStrokeWidth = with(LocalDensity.current) { 3.dp.toPx() }
     LaunchedEffect(compositionResult.value) {
         val composition = compositionResult.value ?: return@LaunchedEffect
-        for (asset in composition.images.values) {
+        for (asset in composition.getImages()?.values.orEmpty()) {
             if (asset.bitmap != null) continue
             asset.bitmap = asset.toDummyBitmap(dummyBitmapStrokeWidth)
         }
@@ -149,7 +149,7 @@ fun PlayerPage(
     }
 
     if (state.showWarningsDialog) {
-        WarningDialog(warnings = compositionResult.value?.warnings ?: emptyList(), onDismiss = { state.showWarningsDialog = false })
+        WarningDialog(warnings = compositionResult.value?.getWarnings() ?: emptyList(), onDismiss = { state.showWarningsDialog = false })
     }
 }
 
@@ -189,7 +189,7 @@ private fun PlayerPageTopAppBar(
             }
         },
         actions = {
-            if (composition?.warnings?.isNotEmpty() == true) {
+            if (composition?.getWarnings()?.isNotEmpty() == true) {
                 IconButton(
                     onClick = { state.showWarningsDialog = true }
                 ) {

@@ -38,7 +38,7 @@ public class LottieInitializeTest extends BaseTest {
     initializeLottie(temporaryFolder1);
     // Fetching here causes the resource to be cached in temporaryFolder1:
     LottieResult<LottieComposition> result1 = LottieCompositionFactory.fromUrlSync(context, "resources://test1.json");
-    assertNotNull(result1.getValue());
+    assertNotNull(result1.value);
 
     // Manually delete to simulate the end of a test:
     temporaryFolder1.delete();
@@ -47,7 +47,7 @@ public class LottieInitializeTest extends BaseTest {
     // Fetching here fails if L.setCacheProvider doesn't reset both its internal networkFetcher and its internal networkCache, because
     // temporaryFolder1 has been deleted:
     LottieResult<LottieComposition> result2 = LottieCompositionFactory.fromUrlSync(context, "resources://test1.json");
-    assertNotNull(result2.getValue());
+    assertNotNull(result2.value);
   }
 
   private void initializeLottie(TemporaryFolder temporaryFolder) {

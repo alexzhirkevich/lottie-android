@@ -99,7 +99,7 @@ fun LottieAnimation(
 
     if (composition == null || composition.duration == 0f) return Box(modifier)
 
-    val bounds = composition.bounds
+    val bounds = composition.bounds!!
     Canvas(
         modifier = modifier
             .lottieSize(bounds.width(), bounds.height())
@@ -116,9 +116,9 @@ fun LottieAnimation(
 
             drawable.enableMergePathsForKitKatAndAbove(enableMergePaths)
             drawable.setSafeMode(safeMode)
-            drawable.renderMode = renderMode
+            drawable.setRenderMode(renderMode)
             drawable.asyncUpdates = asyncUpdates
-            drawable.composition = composition
+            drawable.setComposition(composition)
             drawable.setFontMap(fontMap)
             if (dynamicProperties !== setDynamicProperties) {
                 setDynamicProperties?.removeFrom(drawable)
@@ -128,7 +128,7 @@ fun LottieAnimation(
             drawable.setOutlineMasksAndMattes(outlineMasksAndMattes)
             drawable.isApplyingOpacityToLayersEnabled = applyOpacityToLayers
             drawable.maintainOriginalImageBounds = maintainOriginalImageBounds
-            drawable.clipToCompositionBounds = clipToCompositionBounds
+            drawable.setClipToCompositionBounds(clipToCompositionBounds)
             drawable.clipTextToBoundingBox = clipTextToBoundingBox
             drawable.progress = progress()
             drawable.setBounds(0, 0, bounds.width(), bounds.height())

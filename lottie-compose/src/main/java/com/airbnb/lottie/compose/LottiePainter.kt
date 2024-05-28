@@ -92,22 +92,22 @@ class LottiePainter internal constructor(
     override val intrinsicSize: Size
         get() {
             val composition = composition ?: return Size.Unspecified
-            return Size(composition.bounds.width().toFloat(), composition.bounds.height().toFloat())
+            return Size(composition.bounds!!.width().toFloat(), composition.bounds!!.height().toFloat())
         }
 
     override fun DrawScope.onDraw() {
         val composition = composition ?: return
         drawIntoCanvas { canvas ->
-            val compositionSize = Size(composition.bounds.width().toFloat(), composition.bounds.height().toFloat())
+            val compositionSize = Size(composition.bounds!!.width().toFloat(), composition.bounds!!.height().toFloat())
             val intSize = IntSize(size.width.roundToInt(), size.height.roundToInt())
 
             matrix.reset()
             matrix.preScale(intSize.width / compositionSize.width, intSize.height / compositionSize.height)
 
             drawable.enableMergePathsForKitKatAndAbove(enableMergePaths)
-            drawable.renderMode = renderMode
+            drawable.setRenderMode(renderMode)
             drawable.asyncUpdates = asyncUpdates
-            drawable.composition = composition
+            drawable.setComposition(composition)
             drawable.setFontMap(fontMap)
             if (dynamicProperties !== setDynamicProperties) {
                 setDynamicProperties?.removeFrom(drawable)
@@ -117,10 +117,10 @@ class LottiePainter internal constructor(
             drawable.setOutlineMasksAndMattes(outlineMasksAndMattes)
             drawable.isApplyingOpacityToLayersEnabled = applyOpacityToLayers
             drawable.maintainOriginalImageBounds = maintainOriginalImageBounds
-            drawable.clipToCompositionBounds = clipToCompositionBounds
+            drawable.setClipToCompositionBounds(clipToCompositionBounds)
             drawable.clipTextToBoundingBox = clipTextToBoundingBox
             drawable.progress = progress
-            drawable.setBounds(0, 0, composition.bounds.width(), composition.bounds.height())
+            drawable.setBounds(0, 0, composition.bounds!!.width(), composition.bounds!!.height())
             drawable.draw(canvas.nativeCanvas, matrix)
         }
 

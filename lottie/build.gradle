@@ -6,6 +6,7 @@ plugins {
   id 'net.ltgt.errorprone'
   id 'com.vanniktech.maven.publish'
   id 'androidx.baselineprofile'
+  alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -27,6 +28,9 @@ android {
       includeAndroidResources = true
     }
   }
+  kotlinOptions {
+    jvmTarget = '17'
+  }
 }
 
 mavenPublishing {
@@ -46,6 +50,7 @@ dependencies {
   // Do not upgrade to 2.0 because it will bring in Kotlin as a transitive dependency.
   //noinspection GradleDependency
   implementation libs.okio
+  implementation libs.core.ktx
 
   annotationProcessor libs.nullaway
   errorprone libs.errorprone.core

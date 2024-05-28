@@ -2,6 +2,7 @@ pluginManagement {
   repositories {
     gradlePluginPortal()
     google()
+    mavenCentral()
   }
 }
 
@@ -25,6 +26,7 @@ dependencyResolutionManagement {
 }
 
 include ':lottie'
+include ':lottie-old'
 include ':lottie-compose'
 include ':sample'
 include ':sample-compose'

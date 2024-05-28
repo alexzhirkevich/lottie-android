@@ -54,11 +54,11 @@ public class ImageAssetManager {
   @Nullable public Bitmap updateBitmap(String id, @Nullable Bitmap bitmap) {
     if (bitmap == null) {
       LottieImageAsset asset = imageAssets.get(id);
-      Bitmap ret = asset.getBitmap();
-      asset.setBitmap(null);
+      Bitmap ret = asset.bitmap;
+      asset.bitmap = null;
       return ret;
     }
-    Bitmap prevBitmap = imageAssets.get(id).getBitmap();
+    Bitmap prevBitmap = imageAssets.get(id).bitmap;
     putBitmap(id, bitmap);
     return prevBitmap;
   }
@@ -73,7 +73,7 @@ public class ImageAssetManager {
       return null;
     }
 
-    Bitmap bitmap = asset.getBitmap();
+    Bitmap bitmap = asset.bitmap;
     if (bitmap != null) {
       return bitmap;
     }
@@ -92,7 +92,7 @@ public class ImageAssetManager {
       return null;
     }
 
-    String filename = asset.getFileName();
+    String filename = asset.fileName;
     BitmapFactory.Options opts = new BitmapFactory.Options();
     opts.inScaled = true;
     opts.inDensity = 160;
@@ -107,7 +107,7 @@ public class ImageAssetManager {
         return null;
       }
       bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, opts);
-      Bitmap resizedBitmap = Utils.resizeBitmapIfNeeded(bitmap, asset.getWidth(), asset.getHeight());
+      Bitmap resizedBitmap = Utils.resizeBitmapIfNeeded(bitmap, asset.width, asset.height);
       return putBitmap(id, resizedBitmap);
     }
 
@@ -133,7 +133,7 @@ public class ImageAssetManager {
       Logger.warning("Decoded image `" + id + "` is null.");
       return null;
     }
-    bitmap = Utils.resizeBitmapIfNeeded(bitmap, asset.getWidth(), asset.getHeight());
+    bitmap = Utils.resizeBitmapIfNeeded(bitmap, asset.width, asset.height);
     return putBitmap(id, bitmap);
   }
 
@@ -144,7 +144,7 @@ public class ImageAssetManager {
 
   private Bitmap putBitmap(String key, @Nullable Bitmap bitmap) {
     synchronized (bitmapHashLock) {
-      imageAssets.get(key).setBitmap(bitmap);
+      imageAssets.get(key).bitmap = bitmap;
       return bitmap;
     }
   }

@@ -17,13 +17,13 @@ public class LottieCompositionTest extends BaseTest {
   public void testGetFrameForProgress() {
     LottieResult<LottieComposition> result = LottieCompositionFactory.fromJsonStringSync(JSON, null);
     //noinspection ConstantConditions
-    assertEquals(66.59f, result.getValue().getFrameForProgress(0.37f), 0.01f);
+    assertEquals(66.59f, result.value.getFrameForProgress(0.37f), 0.01f);
   }
 
   @Test
   public void testGetProgressForFrame() {
     LottieResult<LottieComposition> result = LottieCompositionFactory.fromJsonStringSync(JSON, null);
     //noinspection ConstantConditions
-    assertEquals(0.5f, result.getValue().getProgressForFrame(90), 0.01f);
+    assertEquals(0.5f, result.value.getProgressForFrame(90), 0.01f);
   }
 }

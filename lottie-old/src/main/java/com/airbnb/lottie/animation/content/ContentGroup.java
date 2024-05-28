@@ -65,9 +65,14 @@ public class ContentGroup implements DrawingContent, PathContent,
   @Nullable private TransformKeyframeAnimation transformAnimation;
 
   public ContentGroup(final LottieDrawable lottieDrawable, BaseLayer layer, ShapeGroup shapeGroup, LottieComposition composition) {
-    this(lottieDrawable, layer, shapeGroup.getName(),
-        shapeGroup.isHidden(), contentsFromModels(lottieDrawable, composition, layer, shapeGroup.getItems()),
-        findTransform(shapeGroup.getItems()));
+    this(
+        lottieDrawable,
+        layer,
+        shapeGroup.getName(),
+        shapeGroup.isHidden(),
+        contentsFromModels(lottieDrawable, composition, layer, shapeGroup.getItems()),
+        findTransform(shapeGroup.getItems())
+    );
   }
 
   ContentGroup(final LottieDrawable lottieDrawable, BaseLayer layer,

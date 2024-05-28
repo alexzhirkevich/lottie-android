@@ -42,8 +42,8 @@ public class LottieCompositionFactoryTest extends BaseTest {
     @Test
     public void testLoadJsonString() {
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromJsonStringSync(JSON, "json");
-        assertNull(result.getException());
-        assertNotNull(result.getValue());
+        assertNull(result.exception);
+        assertNotNull(result.value);
     }
 
   @Test
@@ -63,45 +63,45 @@ public class LottieCompositionFactoryTest extends BaseTest {
     @Test
     public void testLoadInvalidJsonString() {
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromJsonStringSync(NOT_JSON, "not_json");
-        assertNotNull(result.getException());
-        assertNull(result.getValue());
+        assertNotNull(result.exception);
+        assertNull(result.value);
     }
 
     @Test
     public void testLoadJsonReader() {
         JsonReader reader = JsonReader.of(buffer(source(new ByteArrayInputStream(JSON.getBytes()))));
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromJsonReaderSync(reader, "json");
-        assertNull(result.getException());
-        assertNotNull(result.getValue());
+        assertNull(result.exception);
+        assertNotNull(result.value);
     }
 
     @Test
     public void testLoadInvalidJsonReader() {
         JsonReader reader = JsonReader.of(buffer(source(new ByteArrayInputStream(NOT_JSON.getBytes()))));
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromJsonReaderSync(reader, "json");
-        assertNotNull(result.getException());
-        assertNull(result.getValue());
+        assertNotNull(result.exception);
+        assertNull(result.value);
     }
 
     @Test
     public void testLoadInvalidAssetName() {
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromAssetSync(RuntimeEnvironment.application, "square2.json");
-        assertEquals(FileNotFoundException.class, result.getException().getClass());
-        assertNull(result.getValue());
+        assertEquals(FileNotFoundException.class, result.exception.getClass());
+        assertNull(result.value);
     }
 
     @Test
     public void testNonJsonAssetFile() {
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromAssetSync(RuntimeEnvironment.application, "not_json.txt");
-        assertNotNull(result.getException());
-        assertNull(result.getValue());
+        assertNotNull(result.exception);
+        assertNull(result.value);
     }
 
     @Test
     public void testLoadInvalidRawResName() {
         LottieResult<LottieComposition> result = LottieCompositionFactory.fromRawResSync(RuntimeEnvironment.application, 0);
-        assertNotNull(result.getException());
-        assertNull(result.getValue());
+        assertNotNull(result.exception);
+        assertNull(result.value);
     }
 
     @Test

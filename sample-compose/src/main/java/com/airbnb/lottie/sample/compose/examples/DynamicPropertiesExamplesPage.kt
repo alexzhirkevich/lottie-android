@@ -106,13 +106,13 @@ private fun JumpHeight() {
     val point = remember { PointF() }
     val dynamicProperties = rememberLottieDynamicProperties(
         rememberLottieDynamicProperty(LottieProperty.TRANSFORM_POSITION, "Body") { frameInfo ->
-            var startY = frameInfo.startValue.y
-            var endY = frameInfo.endValue.y
+            var startY = frameInfo.startValue!!.y
+            var endY = frameInfo.endValue!!.y
             when {
                 startY > endY -> startY += extraJumpHeightPx
                 else -> endY += extraJumpHeightPx
             }
-            point.set(frameInfo.startValue.x, lerp(startY, endY, frameInfo.interpolatedKeyframeProgress))
+            point.set(frameInfo.startValue!!.x, lerp(startY, endY, frameInfo.interpolatedKeyframeProgress))
             point
         }
     )

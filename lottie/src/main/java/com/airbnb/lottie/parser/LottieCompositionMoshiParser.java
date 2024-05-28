@@ -118,7 +118,7 @@ public class LottieCompositionMoshiParser {
     reader.beginArray();
     while (reader.hasNext()) {
       Layer layer = LayerParser.parse(reader, composition);
-      if (layer.getLayerType() == Layer.LayerType.IMAGE) {
+      if (layer.layerType == Layer.LayerType.IMAGE) {
         imageCount++;
       }
       layers.add(layer);
@@ -192,7 +192,7 @@ public class LottieCompositionMoshiParser {
       if (imageFileName != null) {
         LottieImageAsset image =
             new LottieImageAsset(width, height, id, imageFileName, relativeFolder);
-        images.put(image.getId(), image);
+        images.put(image.id, image);
       } else {
         precomps.put(id, layers);
       }
@@ -210,7 +210,7 @@ public class LottieCompositionMoshiParser {
           reader.beginArray();
           while (reader.hasNext()) {
             Font font = FontParser.parse(reader);
-            fonts.put(font.getName(), font);
+            fonts.put(font.name, font);
           }
           reader.endArray();
           break;

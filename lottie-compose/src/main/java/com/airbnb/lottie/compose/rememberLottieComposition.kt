@@ -187,7 +187,7 @@ private fun lottieTask(
             LottieCompositionFactory.fromJsonString(spec.jsonString, jsonStringCacheKey)
         }
         is LottieCompositionSpec.ContentProvider -> {
-            val fis = context.contentResolver.openInputStream(spec.uri)
+            val fis = context.contentResolver.openInputStream(spec.uri)!!
             val actualCacheKey = if (cacheKey == DefaultCacheKey) spec.uri.toString() else cacheKey
             when {
                 spec.uri.toString().endsWith("zip") -> LottieCompositionFactory.fromZipStream(
@@ -211,7 +211,8 @@ private suspend fun <T> LottieTask<T>.await(): T = suspendCancellableCoroutine {
     addListener { c ->
         if (!cont.isCompleted) cont.resume(c)
     }.addFailureListener { e ->
-        if (!cont.isCompleted) cont.resumeWithException(e)
+        if (!cont.isCompleted)
+            cont.resumeWithException(e ?: Exception("Unknown"))
     }
 }
 
@@ -224,7 +225,7 @@ private suspend fun loadImagesFromAssets(
         return
     }
     withContext(Dispatchers.IO) {
-        for (asset in composition.images.values) {
+        for (asset in composition.getImages()?.values.orEmpty()) {
             maybeDecodeBase64Image(asset)
             maybeLoadImageFromAsset(context, asset, imageAssetsFolder)
         }
@@ -248,7 +249,7 @@ private fun maybeLoadImageFromAsset(
         val opts = BitmapFactory.Options()
         opts.inScaled = true
         opts.inDensity = 160
-        var bitmap = BitmapFactory.decodeStream(inputStream, null, opts)
+        var bitmap = BitmapFactory.decodeStream(inputStream, null, opts)!!
         bitmap = Utils.resizeBitmapIfNeeded(bitmap, asset.width, asset.height)
         asset.bitmap = bitmap
     } catch (e: IllegalArgumentException) {
@@ -279,9 +280,9 @@ private suspend fun loadFontsFromAssets(
     fontAssetsFolder: String?,
     fontFileExtension: String,
 ) {
-    if (composition.fonts.isEmpty()) return
+    if (composition.fonts.isNullOrEmpty()) return
     withContext(Dispatchers.IO) {
-        for (font in composition.fonts.values) {
+        for (font in composition.fonts!!.values) {
             maybeLoadTypefaceFromAssets(context, font, fontAssetsFolder, fontFileExtension)
         }
     }

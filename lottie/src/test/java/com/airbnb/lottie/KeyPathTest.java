@@ -25,7 +25,7 @@ public class KeyPathTest extends BaseTest {
   @Before
   public void setupDrawable() {
     lottieDrawable = new LottieDrawable();
-    LottieComposition composition = LottieCompositionFactory.fromJsonStringSync(Fixtures.SQUARES, "squares").getValue();
+    LottieComposition composition = LottieCompositionFactory.fromJsonStringSync(Fixtures.SQUARES, "squares").value;
     lottieDrawable.setComposition(composition);
   }
 

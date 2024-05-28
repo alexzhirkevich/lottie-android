@@ -127,8 +127,8 @@ public class GradientColorParser implements com.airbnb.lottie.parser.ValueParser
     // When there are opacity stops, we create a merged list of color stops and opacity stops.
     // For a given color stop, we linearly interpolate the opacity for the two opacity stops around it.
     // For a given opacity stop, we linearly interpolate the color for the two color stops around it.
-    float[] colorStopPositions = gradientColor.getPositions();
-    int[] colorStopColors = gradientColor.getColors();
+    float[] colorStopPositions = gradientColor.positions;
+    int[] colorStopColors = gradientColor.colors;
 
     int opacityStops = (array.size() - startIndex) / 2;
     float[] opacityStopPositions = new float[opacityStops];
@@ -145,7 +145,7 @@ public class GradientColorParser implements com.airbnb.lottie.parser.ValueParser
 
     // Pre-SKIA (Oreo) devices render artifacts when there is two stops in the same position.
     // As a result, we have to de-dupe the merge color and opacity stop positions.
-    float[] newPositions = mergeUniqueElements(gradientColor.getPositions(), opacityStopPositions);
+    float[] newPositions = mergeUniqueElements(gradientColor.positions, opacityStopPositions);
     int newColorPoints = newPositions.length;
     int[] newColors = new int[newColorPoints];
 

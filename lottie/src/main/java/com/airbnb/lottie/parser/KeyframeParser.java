@@ -334,7 +334,7 @@ class KeyframeParser {
     cp2.x = MiscUtils.clamp(cp2.x, -1f, 1f);
     cp2.y = MiscUtils.clamp(cp2.y, -MAX_CP_VALUE, MAX_CP_VALUE);
     int hash = Utils.hashFor(cp1.x, cp1.y, cp2.x, cp2.y);
-    WeakReference<Interpolator> interpolatorRef = L.getDisablePathInterpolatorCache() ? null : getInterpolator(hash);
+    WeakReference<Interpolator> interpolatorRef = L.disablePathInterpolatorCache ? null : getInterpolator(hash);
     if (interpolatorRef != null) {
       interpolator = interpolatorRef.get();
     }
@@ -352,7 +352,7 @@ class KeyframeParser {
           interpolator = new LinearInterpolator();
         }
       }
-      if (!L.getDisablePathInterpolatorCache()) {
+      if (!L.disablePathInterpolatorCache) {
         try {
           putInterpolator(hash, new WeakReference<>(interpolator));
         } catch (ArrayIndexOutOfBoundsException e) {
